@@ -30,11 +30,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getProducts()
-        viewModel.getSaleProducts()
 
         with(binding) {
             rvProducts.adapter = productAdapter
-            rvSaleProducts.adapter = saleProductsAdapter
 
             ivSignOut.setOnClickListener {
                 viewModel.signOut()
@@ -75,35 +73,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 }
             }
         }
-
-        viewModel.saleProductState.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                SaleProductState.Loading -> saleProductProgressBar.visible()
-
-                is SaleProductState.SuccessState -> {
-                    saleProductProgressBar.gone()
-                    saleProductsAdapter.submitList(state.products)
-                }
-
-                is SaleProductState.EmptyScreen -> {
-                    saleProductProgressBar.gone()
-                    ivSaleProductEmpty.visible()
-                    tvSaleProductEmpty.visible()
-                    rvSaleProducts.gone()
-                    tvSaleProductEmpty.text = state.failMessage
-                }
-
-                is SaleProductState.ShowPopUp -> {
-                    saleProductProgressBar.gone()
-                    Snackbar.make(requireView(), state.errorMessage, 1000).show()
-                }
-            }
-        }
     }
 
     private fun onProductClick(id: Int) {
-        findNavController().navigate(HomeFragmentDirections.homeToDetail(id))
-    }
+        findNavController().navigate(R.id.detailFragment)     }
 
     private fun onFavClick(product: ProductUI) {
         viewModel.setFavoriteState(product)

@@ -1,19 +1,23 @@
 package com.yazag.capstoneproject.di
 
 import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.yazag.capstoneproject.common.Constants.BASE_URL
 import com.yazag.capstoneproject.data.source.remote.ProductService
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
+import okhttp3.Interceptor.*
 import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -34,6 +38,14 @@ object NetworkModule {
             }
         )
         addInterceptor(chucker)
+        addInterceptor(
+
+                (Interceptor { chain ->
+                val request: Request = chain.request()
+                val response: Response = chain.proceed(request)
+
+                response
+            }))
     }.build()
 
     @Singleton

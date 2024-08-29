@@ -37,24 +37,16 @@ class ProductsAdapter(
         fun bind(product: ProductUI) {
             with(binding) {
                 tvTitle.text = product.title
-
-                if(product.saleState) {
-                    tvSalePrice.visible()
-                    "${product.price} ₺".also { tvPrice.text = it }
-                    "${product.salePrice} ₺".also { tvSalePrice.text = it }
-                    tvPrice.strike = true
-                } else{
-                    "${product.price} ₺".also { tvPrice.text = it }
+                  "${product.price} Rs".also { tvPrice.text = it }
                     tvPrice.strike = false
-                    tvSalePrice.gone()
-                }
+
 
                 ivFavorite.setBackgroundResource(
                     if (product.isFav) R.drawable.ic_fav_selected
                     else R.drawable.ic_fav_unselected
                 )
 
-                Glide.with(ivProduct).load(product.imageOne).into(ivProduct)
+                Glide.with(ivProduct).load("https://freshfoodretailers.com/admin/product_image/${product.imageOne}").into(ivProduct)
 
                 root.setOnClickListener {
                     onProductClick(product.id)

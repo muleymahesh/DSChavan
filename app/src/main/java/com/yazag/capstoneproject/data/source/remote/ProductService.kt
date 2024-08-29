@@ -1,5 +1,6 @@
 package com.yazag.capstoneproject.data.source.remote
 
+import com.yazag.capstoneproject.data.model.RequestParam
 import com.yazag.capstoneproject.data.model.request.AddToCartRequest
 import com.yazag.capstoneproject.data.model.request.ClearCartRequest
 import com.yazag.capstoneproject.data.model.request.DeleteFromCartRequest
@@ -7,6 +8,7 @@ import com.yazag.capstoneproject.data.model.response.BaseResponse
 import com.yazag.capstoneproject.data.model.response.GetCategoryResponse
 import com.yazag.capstoneproject.data.model.response.GetProductDetailResponse
 import com.yazag.capstoneproject.data.model.response.GetProductsResponse
+import com.yazag.capstoneproject.data.model.response.ProductListResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -15,8 +17,10 @@ import retrofit2.http.Query
 
 interface ProductService {
 
-    @GET("get_products.php")
-    suspend fun getProducts(): Response<GetProductsResponse>
+    @POST("newapi.php")
+    suspend fun getProducts(
+        @Body requestParam: RequestParam
+    ): Response<ProductListResponse>
 
     @GET("get_sale_products.php")
     suspend fun getSaleProducts(): Response<GetProductsResponse>

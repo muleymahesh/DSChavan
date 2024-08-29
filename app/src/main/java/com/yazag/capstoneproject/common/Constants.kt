@@ -3,7 +3,7 @@ package com.yazag.capstoneproject.common
 object Constants {
     const val USER = "orenayse"
 
-    const val BASE_URL = "https://api.canerture.com/ecommerce/"
+    const val BASE_URL = "https://freshfoodretailers.com/admin/ws/"
 
     const val ID = "id"
     const val NAME = "name"

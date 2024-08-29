@@ -3,8 +3,10 @@ package com.yazag.capstoneproject.data.repository
 import com.yazag.capstoneproject.common.Resource
 import com.yazag.capstoneproject.data.mapper.mapProductEntityToProductUI
 import com.yazag.capstoneproject.data.mapper.mapProductToProductUI
+import com.yazag.capstoneproject.data.mapper.mapProductToProductUI1
 import com.yazag.capstoneproject.data.mapper.mapToProductEntity
 import com.yazag.capstoneproject.data.mapper.mapToProductUI
+import com.yazag.capstoneproject.data.model.RequestParam
 import com.yazag.capstoneproject.data.model.request.AddToCartRequest
 import com.yazag.capstoneproject.data.model.request.ClearCartRequest
 import com.yazag.capstoneproject.data.model.request.DeleteFromCartRequest
@@ -25,12 +27,12 @@ class ProductRepository(
         withContext(Dispatchers.IO) {
             try {
                 val favorites = productDao.getProductIds()
-                val response = productService.getProducts().body()
+                val response = productService.getProducts(requestParam = RequestParam("get_all_product")).body()
 
-                if (response?.status == 200) {
-                    Resource.Success(response.products.orEmpty().mapProductToProductUI(favorites))
+                if (response?.responseCode == 200) {
+                    Resource.Success(response.data.orEmpty().mapProductToProductUI1(favorites))
                 } else {
-                    Resource.Fail(response?.message.orEmpty())
+                    Resource.Fail(response?.result.orEmpty())
                 }
             } catch (e: Exception) {
                 Resource.Error(e.message.orEmpty())

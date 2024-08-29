@@ -22,14 +22,14 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     private val viewModel by viewModels<DetailViewModel>()
 
-    private val args by navArgs<DetailFragmentArgs>()
+//    private val args by navArgs<DetailViewModelFragmentArgs>()
 
     private val imagesAdapter = DetailAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getProductDetail(args.id)
+//        viewModel.getProductDetail(args.id)
 
         observeData()
 
@@ -41,11 +41,11 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             }
 
             ivFav.setOnClickListener {
-                viewModel.setFavoriteState(args.id)
+//                viewModel.setFavoriteState(args.id)
             }
 
             btnAddCart.setOnClickListener {
-                viewModel.addToCart(args.id)
+//                viewModel.addToCart(args.id)
                 Snackbar.make(requireView(), "Product added to cart.", 1000).show()
             }
         }
@@ -63,7 +63,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                         is DetailState.SuccessState -> {
                             progressBar.gone()
 
-                            val imageList = listOf(state.product.imageOne, state.product.imageTwo, state.product.imageThree)
+                            val imageList = listOf(state.product.imageOne)
                             imagesAdapter.updateList(imageList)
                             tvTitleDetail.text = state.product.title
                             tvCategory.text = state.product.category
